@@ -1,38 +1,72 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --color-background: #cccccc;
+  --color-header: #707070;
+  --color-form: #eeeeee;
+  --color-cv-header: #143e72;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  background-color: var(--color-background);
+  font-family: 'Raleway', sans-serif;
 }
 
-.App-header {
-  background-color: #282c34;
+header {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 4em;
+  background-color: var(--color-header);
+  color: white;
+  font-weight: 400;
+}
+
+main {
+  display: grid;
+  width: 100vw;
+  height: auto;
   min-height: 100vh;
+  padding: 1em 1em 0 1em;
+  box-sizing: border-box;
+  gap: 0.5em;
+}
+
+.form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: var(--color-form);
+  box-shadow: 0px 0px 4px var(--color-header);
+  border-radius: 0.2em;
+}
+
+.form-section {
+  display: grid;
+  padding: 0.5em;
+}
+
+.form-section-title {
+  font-size: 1.2em;
+}
+
+.form-field {
+  height: 2em;
+}
+
+.cv {
+  background-color: var(--color-form);
+}
+
+.cv-header {
+  padding: 1em;
+  background-color: var(--color-cv-header);
+}
+
+.cv-name {
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
