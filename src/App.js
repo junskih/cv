@@ -15,8 +15,8 @@ class App extends React.Component {
         fields: [
           'first name',
           'last name',
+          'profession',
           'title',
-          'company/school',
           'city',
           'zipcode',
           'address',
@@ -26,7 +26,7 @@ class App extends React.Component {
         ],
         deletable: false
       },
-
+      
       {
         id: uniqid(),
         title: 'education',
@@ -51,6 +51,71 @@ class App extends React.Component {
         deletable: true
       }
     ];
+
+    // Initialize state based on form section definitions
+    let info = {};
+    this.formSections.forEach(formSection => {
+      let entry = this.handleAdd(formSection.title);
+      info[formSection.title] = [entry];
+    });
+    this.state = {...info};
+    
+    // This is what state will/should look like:
+    /*
+    this.state = {
+      'personal information': [
+        {
+          id: uniqid(),
+          isEditing: false,
+          fields: {
+            'first name': '',
+            ...
+          }
+        }
+      ],
+      'education': [
+        {
+          id: uniqid(),
+          isEditing: false,
+          fields: {
+            'degree': '',
+            ...
+          }
+        }
+      ],
+      ...
+    }
+    */
+  }
+
+  handleAdd(formSectionTitle) {
+    const formSection = this.formSections.find(section => section.title === formSectionTitle);
+
+    let entry = {};
+    entry.id = uniqid();
+    entry.isEditing = false;
+    entry.fields = {};
+
+    formSection.fields.forEach(field => {
+      entry.fields[field] = '';
+    });
+    
+    // Add section to state along with array including single empty entry
+    this.setState(state => {
+      return {
+        [formSectionTitle]: [...state[formSectionTitle], entry]
+      };
+    });
+
+    return entry;
+  }
+
+  handleEdit(formSection, id) {
+
+  }
+
+  handleSave(formSection, id, entry) {
+
   }
   
   render() {
@@ -60,8 +125,8 @@ class App extends React.Component {
           <h1>CV</h1>
         </header>
         <main>
-          <Form formSections={this.formSections} />
-          <CV formSections={this.formSections} />
+          <Form state={this.state}  />
+          <CV state={this.state} />
         </main>
       </div>
     );
