@@ -30,11 +30,13 @@ class FormField extends React.Component {
     let field;
     if (isEditing) {
       field = <input
-                type='text'
-                placeholder={capitalize(placeholder)}
-                value={value}
-                onChange={this.handleChange}
-              />
+        type='text'
+        placeholder={capitalize(placeholder)}
+        value={value}
+        onChange={this.handleChange}
+      />
+    } else if (value.trim() === '') {
+      field = <p>-</p>
     } else {
       field = <p>{value}</p>
     }
