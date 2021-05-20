@@ -54,6 +54,11 @@ main {
   font-size: 1.2em;
 }
 
+.form-entry {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 .form-field {
   height: 2em;
 }
