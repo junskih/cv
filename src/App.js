@@ -9,7 +9,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleAdd = this.handleAdd.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
 
@@ -71,7 +70,6 @@ class App extends React.Component {
       'personal information': [
         {
           id: uniqid(),
-          isEditing: false,
           fields: {
             'first name': '',
             ...
@@ -81,7 +79,6 @@ class App extends React.Component {
       'education': [
         {
           id: uniqid(),
-          isEditing: false,
           fields: {
             'degree': '',
             ...
@@ -89,16 +86,6 @@ class App extends React.Component {
         }
       ],
       ...
-    }
-
-    this.state = {
-      formSectionTitle: [
-        {
-          id: uniqid(),
-          isEditing: false,
-
-        }
-      ]
     }
     */
   }
@@ -108,7 +95,6 @@ class App extends React.Component {
 
     let entry = {};
     entry.id = uniqid();
-    entry.isEditing = false;
     entry.fields = {};
 
     formSection.fields.forEach(field => {
@@ -124,7 +110,7 @@ class App extends React.Component {
 
     return entry;
   }
-
+  /*
   handleEdit(formSectionTitle, id) {
     console.log(formSectionTitle, id);
 
@@ -139,13 +125,14 @@ class App extends React.Component {
       }
     });
   }
+  */
 
-  handleSave(formSection, id, entry) {
-    console.log(formSection, id, entry);
+  handleSave(formSectionTitle, id, entry) {
+    console.log('Save', formSectionTitle, id, entry);
   }
 
-  handleDelete(formSection, id) {
-    console.log(formSection, id);
+  handleDelete(formSectionTitle, id) {
+    console.log('Delete', formSectionTitle, id);
   }
   
   render() {
@@ -155,8 +142,15 @@ class App extends React.Component {
           <h1>CV</h1>
         </header>
         <main>
-          <Form state={this.state} handleEdit={this.handleEdit} />
-          <CV state={this.state} />
+          <Form
+            state={this.state}
+            handleAdd={this.handleAdd}
+            handleSave={this.handleSave}
+            handleDelete={this.handleDelete}
+          />
+          <CV
+            state={this.state}
+          />
         </main>
       </div>
     );

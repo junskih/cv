@@ -1,5 +1,6 @@
 import React from 'react';
 import FormEntry from './FormEntry';
+import Button from './Button';
 import { capitalize } from '../utils';
 
 class FormSection extends React.Component {
@@ -7,7 +8,9 @@ class FormSection extends React.Component {
     const {
       title,
       sectionData,
-      handleEdit
+      handleAdd,
+      handleSave,
+      handleDelete
     } = this.props;
 
     let entries = sectionData.map(entry => 
@@ -15,7 +18,8 @@ class FormSection extends React.Component {
         key={entry.id}
         isEditing={entry.isEditing}
         fields={entry.fields}
-        handleEdit={handleEdit.bind(this, title, entry.id)}
+        handleSave={handleSave}
+        handleDelete={handleDelete}
       />
     );
 
@@ -23,6 +27,7 @@ class FormSection extends React.Component {
       <div className='form-section'>
         <h2>{capitalize(title)}</h2>
         {entries}
+        <Button name='add' onClick={handleAdd.bind(this, title)} />
       </div>
     );
   }

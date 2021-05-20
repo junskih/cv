@@ -5,7 +5,9 @@ class Form extends React.Component {
   render() {
     const {
       state,
-      handleEdit
+      handleAdd,
+      handleSave,
+      handleDelete
     } = this.props;
 
     const sections = [];
@@ -15,7 +17,9 @@ class Form extends React.Component {
           key={sectionTitle}
           title={sectionTitle}
           sectionData={state[sectionTitle]}
-          handleEdit={handleEdit}
+          handleAdd={handleAdd}
+          handleSave={handleSave}
+          handleDelete={handleDelete}
         />
       );
     }
