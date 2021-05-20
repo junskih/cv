@@ -4,17 +4,25 @@ import FormSection from './FormSection';
 class Form extends React.Component {
   render() {
     const {
-      state
+      state,
+      handleEdit
     } = this.props;
 
-    const formSections = [];
-    for (const key in state) {
-      formSections.push(<FormSection key={key} title={key} />);
+    const sections = [];
+    for (const sectionTitle in state) {
+      sections.push(
+        <FormSection
+          key={sectionTitle}
+          title={sectionTitle}
+          sectionData={state[sectionTitle]}
+          handleEdit={handleEdit}
+        />
+      );
     }
 
     return (
       <div className='form'>
-        {formSections}
+        {sections}
       </div>
     );
   }
