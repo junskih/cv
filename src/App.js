@@ -1,12 +1,17 @@
 import React from 'react';
-import './App.css';
-import uniqid from 'uniqid';
 import Form from './components/Form';
 import CV from './components/CV';
+import uniqid from 'uniqid';
+import './App.css';
+const clone = require('rfdc')();
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
 
     this.formSections = [
       {
@@ -85,6 +90,16 @@ class App extends React.Component {
       ],
       ...
     }
+
+    this.state = {
+      formSectionTitle: [
+        {
+          id: uniqid(),
+          isEditing: false,
+
+        }
+      ]
+    }
     */
   }
 
@@ -110,12 +125,27 @@ class App extends React.Component {
     return entry;
   }
 
-  handleEdit(formSection, id) {
+  handleEdit(formSectionTitle, id) {
+    console.log(formSectionTitle, id);
 
+    this.setState((state) => {
+      // Deep copy array of entries
+      let newFormSection = clone(state[formSectionTitle]);
+      let entry = newFormSection.find(entry => entry.id === id);
+      entry.isEditing = !entry.isEditing;
+
+      return {
+        [formSectionTitle]: newFormSection
+      }
+    });
   }
 
   handleSave(formSection, id, entry) {
+    console.log(formSection, id, entry);
+  }
 
+  handleDelete(formSection, id) {
+    console.log(formSection, id);
   }
   
   render() {
@@ -125,7 +155,7 @@ class App extends React.Component {
           <h1>CV</h1>
         </header>
         <main>
-          <Form state={this.state}  />
+          <Form state={this.state} handleEdit={this.handleEdit} />
           <CV state={this.state} />
         </main>
       </div>
