@@ -16,8 +16,8 @@ class FormSection extends React.Component {
     let entries = sectionData.map(entry => 
       <FormEntry
         key={entry.id}
-        isEditing={entry.isEditing}
-        fields={entry.fields}
+        entryData={entry}
+        sectionTitle={title}
         handleSave={handleSave}
         handleDelete={handleDelete}
       />
@@ -25,7 +25,7 @@ class FormSection extends React.Component {
 
     return (
       <div className='form-section'>
-        <h2>{capitalize(title)}</h2>
+        <h2 className='form-section-title'>{capitalize(title)}</h2>
         {entries}
         <Button name='add' onClick={handleAdd.bind(this, title)} />
       </div>

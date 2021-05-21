@@ -7,7 +7,6 @@ class FormField extends React.Component {
     this.state = {
       value: props.value
     }
-
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -15,6 +14,7 @@ class FormField extends React.Component {
     this.setState({
       value: e.target.value
     });
+    this.props.handleChange(this.props.placeholder, e.target.value);
   }
 
   render() {
