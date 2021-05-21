@@ -110,25 +110,19 @@ class App extends React.Component {
 
     return entry;
   }
-  /*
-  handleEdit(formSectionTitle, id) {
-    console.log(formSectionTitle, id);
+
+  handleSave(formSectionTitle, id, fields) {
 
     this.setState((state) => {
       // Deep copy array of entries
       let newFormSection = clone(state[formSectionTitle]);
       let entry = newFormSection.find(entry => entry.id === id);
-      entry.isEditing = !entry.isEditing;
+      entry.fields = fields;
 
       return {
         [formSectionTitle]: newFormSection
       }
     });
-  }
-  */
-
-  handleSave(formSectionTitle, id, entry) {
-    console.log('Save', formSectionTitle, id, entry);
   }
 
   handleDelete(formSectionTitle, id) {
