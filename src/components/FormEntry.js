@@ -57,7 +57,7 @@ class FormEntry extends React.Component {
           isEditing={isEditing}
           placeholder={field}
           value={entryData.fields[field]}
-          onChange={this.handleChange}
+          handleChange={this.handleChange}
         />
       );
     }
