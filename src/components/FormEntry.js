@@ -41,6 +41,7 @@ class FormEntry extends React.Component {
 
   render() {
     const {
+      sectionTitle,
       entryData,
       handleDelete
     } = this.props;
@@ -68,8 +69,14 @@ class FormEntry extends React.Component {
     return (
       <div className='form-entry'>
         {entryFields}
-        <Button name={buttonName} onClick={buttonHandler}/>
-        <Button name='delete' onClick={handleDelete}/>
+        <Button
+          name={buttonName}
+          onClick={buttonHandler}
+        />
+        <Button
+          name='delete'
+          onClick={handleDelete.bind(this, sectionTitle, entryData.id)}
+        />
       </div>
     );
   }

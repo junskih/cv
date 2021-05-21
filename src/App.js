@@ -112,7 +112,6 @@ class App extends React.Component {
   }
 
   handleSave(formSectionTitle, id, fields) {
-
     this.setState((state) => {
       // Deep copy array of entries
       let newFormSection = clone(state[formSectionTitle]);
@@ -127,6 +126,15 @@ class App extends React.Component {
 
   handleDelete(formSectionTitle, id) {
     console.log('Delete', formSectionTitle, id);
+    this.setState((state) => {
+      // Deep copy array of entries
+      let newFormSection = clone(state[formSectionTitle])
+      .filter(entry => entry.id !== id);
+
+      return {
+        [formSectionTitle]: newFormSection
+      }
+    });
   }
   
   render() {
