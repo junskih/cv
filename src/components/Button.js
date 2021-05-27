@@ -1,4 +1,5 @@
 import React from 'react';
+import { capitalize } from '../utils';
 
 class Button extends React.Component {
   render() {
@@ -8,7 +9,12 @@ class Button extends React.Component {
     } = this.props;
 
     return(
-      <button onClick={onClick}>{name}</button>
+      <button
+        className='form-button'
+        onClick={onClick}
+      >
+        {capitalize(name)}
+      </button>
     );
   }
 }
