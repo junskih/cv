@@ -20,11 +20,11 @@ class App extends React.Component {
           'first name',
           'last name',
           'profession',
-          'title',
+          'company/school',
           'city',
           'zipcode',
           'address',
-          'phone',
+          'phone number',
           'email',
           'description'
         ],
@@ -90,49 +90,47 @@ class App extends React.Component {
     */
   }
 
-  handleAdd(formSectionTitle) {
-    const formSection = this.formSections.find(section => section.title === formSectionTitle);
+  handleAdd(sectionTitle) {
+    const formSection = this.formSections.find(section => section.title === sectionTitle);
 
     let entry = {};
     entry.id = uniqid();
     entry.fields = {};
 
     formSection.fields.forEach(field => {
-      entry.fields[field] = '';
+      entry.fields[field] = `Meme ${field}`;
     });
     
     // Add section to state along with array including single empty entry
     this.setState(state => {
       return {
-        [formSectionTitle]: [...state[formSectionTitle], entry]
+        [sectionTitle]: [...state[sectionTitle], entry]
       };
     });
 
     return entry;
   }
 
-  handleSave(formSectionTitle, id, fields) {
+  handleSave(sectionTitle, id, fields) {
     this.setState((state) => {
       // Deep copy array of entries
-      let newFormSection = clone(state[formSectionTitle]);
+      let newFormSection = clone(state[sectionTitle]);
       let entry = newFormSection.find(entry => entry.id === id);
       entry.fields = fields;
 
       return {
-        [formSectionTitle]: newFormSection
+        [sectionTitle]: newFormSection
       }
     });
   }
 
-  handleDelete(formSectionTitle, id) {
-    console.log('Delete', formSectionTitle, id);
+  handleDelete(sectionTitle, id) {
     this.setState((state) => {
-      // Deep copy array of entries
-      let newFormSection = clone(state[formSectionTitle])
-      .filter(entry => entry.id !== id);
+      let newFormSection = clone(state[sectionTitle])
+        .filter(entry => entry.id !== id);
 
       return {
-        [formSectionTitle]: newFormSection
+        [sectionTitle]: newFormSection
       }
     });
   }
