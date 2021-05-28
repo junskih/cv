@@ -19,8 +19,7 @@ class App extends React.Component {
         fields: [
           'first name',
           'last name',
-          'profession',
-          'company/school',
+          'title',
           'city',
           'zipcode',
           'address',
