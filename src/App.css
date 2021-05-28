@@ -1,15 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-  --color-background: #cccccc;
-  --color-header: #707070;
+  /*--color-background: #cccccc;*/
+  --color-background: #707070;
+  --color-header: #333333;
   --color-form: #eeeeee;
+  --color-form-section-title: #393939;
+  --color-cv-sidebar: #c9c9c9;
   --color-cv-header: #143e72;
 }
 
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -20,20 +24,18 @@ body {
 header {
   display: flex;
   align-items: center;
-  width: 100vw;
   height: 4em;
   background-color: var(--color-header);
   color: white;
   font-weight: 400;
+  padding: 0 0 0 1em;
 }
 
 main {
   display: grid;
-  width: 100vw;
   height: auto;
   min-height: 100vh;
   padding: 1em 1em 0 1em;
-  box-sizing: border-box;
   gap: 0.5em;
 }
 
@@ -52,26 +54,64 @@ main {
 
 .form-section-title {
   font-size: 1.2em;
+  color: var(--color-form-section-title);
 }
 
 .form-entry {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding: 0.25em 0;
 }
 
 .form-field {
   height: 2em;
 }
 
+.form-field input {
+  padding: 0.25em;
+  border-radius: 5px;
+  border: none;
+}
+
+.form-button {
+  padding: 0.25em;
+  font-weight: 600;
+}
+
 .cv {
+  display: grid;
   background-color: var(--color-form);
+  width: 100%;
+  height: 100vh;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 5fr;
+  grid-template-areas:
+  'header header'
+  'sidebar main';
 }
 
 .cv-header {
+  grid-area: header;
   padding: 1em;
   background-color: var(--color-cv-header);
+  color: var(--color-form);
 }
 
-.cv-name {
-  color: white;
+.cv-sidebar {
+  grid-area: sidebar;
+  background-color: var(--color-cv-sidebar);
+}
+
+.cv-section {
+  width: 100%;
+}
+
+.cv-section-title {
+  color: var(--color-cv-header);
+  font-size: 0.8em;
+  font-weight: 800;
+}
+
+.cv-sidebar-entry-title {
+  font-weight: 600;
 }
