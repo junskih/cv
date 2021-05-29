@@ -27,7 +27,10 @@ class FormSection extends React.Component {
       <div className='form-section'>
         <h2 className='form-section-title'>{capitalize(title)}</h2>
         {entries}
-        <Button name='add' onClick={handleAdd.bind(this, title)} />
+        <Button
+          name='add'
+          color='success'
+          onClick={handleAdd.bind(this, title)} />
       </div>
     );
   }

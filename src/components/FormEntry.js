@@ -71,10 +71,12 @@ class FormEntry extends React.Component {
         {entryFields}
         <Button
           name={buttonName}
+          color='neutral'
           onClick={buttonHandler}
         />
         <Button
           name='delete'
+          color='danger'
           onClick={handleDelete.bind(this, sectionTitle, entryData.id)}
         />
       </div>
