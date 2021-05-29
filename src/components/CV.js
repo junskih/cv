@@ -1,7 +1,8 @@
 import React from 'react';
-import CVMainEntry from './CVMainEntry';
 import CVSection from './CVSection';
 import CVSidebarEntry from './CVSidebarEntry';
+import CVEducationEntry from './CVEducationEntry';
+import CVExperienceEntry from './CVExperienceEntry';
 
 class CV extends React.Component {
   render() {
@@ -10,11 +11,25 @@ class CV extends React.Component {
     } = this.props;
 
     const personal = state['personal information'][0].fields;
+
     const education = state['education'].map(entry => {
-      return <CVMainEntry key={entry.id} entryData={entry.fields} />
+      return <CVEducationEntry
+        key={entry.id}
+        degree={entry.fields['degree']}
+        institution={entry.fields['institution']}
+        from={entry.fields['from']}
+        to={entry.fields['to']}
+      />
     });
+
     const experience = state['experience'].map(entry => {
-      return <CVMainEntry key={entry.id} entryData={entry.fields} />
+      return <CVExperienceEntry
+        key={entry.id}
+        title={entry.fields['title']}
+        company={entry.fields['employer']}
+        from={entry.fields['from']}
+        to={entry.fields['to']}
+      />
     });
     
     return (
@@ -23,21 +38,28 @@ class CV extends React.Component {
           <h2>{`${personal['first name']} ${personal['last name']}`}</h2>
           <h4>{personal['title']}</h4>
         </div>
+
         <div className='cv-sidebar'>
-          <CVSection sectionTitle={'personal details'} >
-            <CVSidebarEntry entryTitle={'address'} entryData={personal['address']} />
-            <CVSidebarEntry entryTitle={'email'} entryData={personal['email']} />
-            <CVSidebarEntry entryTitle={'phone number'} entryData={personal['phone number']} />
-          </CVSection>
+          <div className='cv-sidebar-container'>
+            <div className='cv-sidebar-image'></div>
+            <CVSection title={'personal details'} >
+              <CVSidebarEntry title={'address'} content={personal['address']} />
+              <CVSidebarEntry title={'email'} content={personal['email']} />
+              <CVSidebarEntry title={'phone number'} content={personal['phone number']} />
+            </CVSection>
+          </div>
         </div>
+
         <div className='cv-main'>
-          <CVSection sectionTitle={'description'}>
+          <CVSection title={'description'}>
             <p>{personal['description']}</p>
           </CVSection>
-          <CVSection sectionTitle={'education'}>
+
+          <CVSection title={'education'}>
             {education}
           </CVSection>
-          <CVSection sectionTitle={'experience'}>
+
+          <CVSection title={'experience'}>
             {experience}
           </CVSection>
         </div>
