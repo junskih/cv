@@ -4,12 +4,12 @@ import { capitalize } from '../utils';
 class CVSection extends React.Component {
   render() {
     const {
-      sectionTitle
+      title
     } = this.props;
 
     return (
       <div className='cv-section'>
-        <h3 className='cv-section-title'>{capitalize(sectionTitle)}</h3>
+        <h3 className='cv-section-title'>{capitalize(title)}</h3>
         {this.props.children}
       </div>
     );
