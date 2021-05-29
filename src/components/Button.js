@@ -5,12 +5,13 @@ class Button extends React.Component {
   render() {
     const {
       name,
+      color,
       onClick
     } = this.props;
 
     return(
       <button
-        className='form-button'
+        className={`form-button form-button--${color}`}
         onClick={onClick}
       >
         {capitalize(name)}
