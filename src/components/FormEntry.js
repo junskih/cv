@@ -7,7 +7,7 @@ class FormEntry extends React.Component {
     super(props);
     this.state = {
       isEditing: true,
-      editFields: {...this.props.entryData.fields}
+      editFields: {...this.props.data}
     }
     this.handleEdit = this.handleEdit.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -23,7 +23,7 @@ class FormEntry extends React.Component {
 
     this.props.handleSave(
       this.props.sectionTitle,
-      this.props.entryData.id,
+      this.props.id,
       this.state.editFields
     );
   }
@@ -41,9 +41,7 @@ class FormEntry extends React.Component {
 
   render() {
     const {
-      sectionTitle,
-      entryData,
-      handleDelete
+      data
     } = this.props;
 
     const {
@@ -51,13 +49,13 @@ class FormEntry extends React.Component {
     } = this.state;
 
     let entryFields = [];
-    for (const field in entryData.fields) {
+    for (const field in data) {
       entryFields.push(
         <FormField
           key={field}
           isEditing={isEditing}
           placeholder={field}
-          value={entryData.fields[field]}
+          value={data[field]}
           handleChange={this.handleChange}
         />
       );
@@ -74,11 +72,7 @@ class FormEntry extends React.Component {
           color='neutral'
           onClick={buttonHandler}
         />
-        <Button
-          name='delete'
-          color='danger'
-          onClick={handleDelete.bind(this, sectionTitle, entryData.id)}
-        />
+        {this.props.children}
       </div>
     );
   }

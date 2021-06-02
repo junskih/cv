@@ -1,32 +1,94 @@
 import React from 'react';
 import FormSection from './FormSection';
+import FormEntry from './FormEntry';
+import Button from './Button';
 
 class Form extends React.Component {
   render() {
     const {
-      state,
+      personal,
+      education,
+      experience,
       handleAdd,
       handleSave,
       handleDelete
     } = this.props;
+    
+    // Personal entry cannot be deleted
+    const personalEntry = personal.map(entry => 
+      <FormEntry
+        key={entry.id}
+        id={entry.id}
+        sectionTitle={'personal'}
+        data={entry.fields}
+        handleSave={handleSave}
+      />
+    );
 
-    const sections = [];
-    for (const sectionTitle in state) {
-      sections.push(
-        <FormSection
-          key={sectionTitle}
-          title={sectionTitle}
-          sectionData={state[sectionTitle]}
-          handleAdd={handleAdd}
-          handleSave={handleSave}
-          handleDelete={handleDelete}
+    const educationEntries = education.map(entry => 
+      <FormEntry
+        key={entry.id}
+        id={entry.id}
+        sectionTitle={'education'}
+        data={entry.fields}
+        handleSave={handleSave}
+      >
+        <Button
+          name='delete'
+          color='danger'
+          onClick={handleDelete.bind(this, 'education', entry.id)}
         />
-      );
-    }
+      </FormEntry>
+    );
+
+    const experienceEntries = experience.map(entry => 
+      <FormEntry
+        key={entry.id}
+        id={entry.id}
+        sectionTitle={'experience'}
+        data={entry.fields}
+        handleSave={handleSave}
+      >
+        <Button
+          name='delete'
+          color='danger'
+          onClick={handleDelete.bind(this, 'experience', entry.id)}
+        />
+      </FormEntry>
+    );
 
     return (
       <div className='form'>
-        {sections}
+        <FormSection
+          key={'personal'}
+          title={'personal'}
+        >
+          {personalEntry}
+        </FormSection>
+
+        <FormSection
+          key={'education'}
+          title={'education'}
+        >
+          {educationEntries}
+          <Button
+            name='add'
+            color='success'
+            onClick={handleAdd.bind(this, 'education')}
+          />
+        </FormSection>
+
+        <FormSection
+          key={'experience'}
+          title={'experience'}
+        >
+          {experienceEntries}
+          <Button
+            name='add'
+            color='success'
+            onClick={handleAdd.bind(this, 'experience')}
+          />
+        </FormSection>
       </div>
     );
   }

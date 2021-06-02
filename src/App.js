@@ -15,7 +15,7 @@ class App extends React.Component {
     this.formSections = [
       {
         id: uniqid(),
-        title: 'personal information',
+        title: 'personal',
         fields: [
           'first name',
           'last name',
@@ -135,6 +135,12 @@ class App extends React.Component {
   }
   
   render() {
+    const {
+      personal,
+      education,
+      experience
+    } = this.state;
+
     return (
       <div>
         <header>
@@ -142,13 +148,17 @@ class App extends React.Component {
         </header>
         <main>
           <Form
-            state={this.state}
+            personal={personal}
+            education={education}
+            experience={experience}
             handleAdd={this.handleAdd}
             handleSave={this.handleSave}
             handleDelete={this.handleDelete}
           />
           <CV
-            state={this.state}
+            personal={personal}
+            education={education}
+            experience={experience}
           />
         </main>
       </div>
