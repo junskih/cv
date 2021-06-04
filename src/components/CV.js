@@ -37,8 +37,8 @@ class CV extends React.Component {
     return (
       <div className='cv'>
         <div className='cv-header'>
-          <h2>{`${personalEntry['first name']} ${personalEntry['last name']}`}</h2>
-          <h4>{personalEntry['title']}</h4>
+          <h2 className='cv-header-name'>{`${personalEntry['first name']} ${personalEntry['last name']}`}</h2>
+          <h4 className='cv-header-title'>{personalEntry['title']}</h4>
         </div>
 
         <div className='cv-sidebar'>
