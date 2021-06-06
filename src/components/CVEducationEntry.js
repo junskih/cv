@@ -12,9 +12,9 @@ class CVEducationEntry extends React.Component {
     return (
       <div className='cv-main-entry'>
         <p className='cv-main-entry-fromto'>{`${from}-${to}`}</p>
-        <div>
-          <p>{degree}</p>
-          <p>{institution}</p>
+        <div className='cv-main-entry-field-container'>
+          <p className='cv-main-entry-field'>{degree}</p>
+          <p className='cv-main-entry-field'>{institution}</p>
         </div>
       </div>
     );

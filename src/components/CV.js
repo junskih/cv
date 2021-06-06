@@ -54,7 +54,7 @@ class CV extends React.Component {
 
         <div className='cv-main'>
           <CVSection title={'description'}>
-            <p>{personalEntry['description']}</p>
+            <p className='cv-main-entry-field'>{personalEntry['description']}</p>
           </CVSection>
 
           <CVSection title={'education'}>

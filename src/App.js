@@ -144,7 +144,7 @@ class App extends React.Component {
     return (
       <div>
         <header>
-          <h1>CV</h1>
+          <h1 className='header-title'>CV</h1>
         </header>
         <main>
           <Form
