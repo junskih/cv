@@ -33,6 +33,9 @@ class CV extends React.Component {
         to={entry.fields['to']}
       />
     );
+
+    const address = `${personalEntry['address']}
+    \n${personalEntry['zipcode']} ${personalEntry['city']}`;
     
     return (
       <div className='cv'>
@@ -45,7 +48,7 @@ class CV extends React.Component {
           <div className='cv-sidebar-container'>
             <div className='cv-sidebar-image'></div>
             <CVSection title={'personal details'} >
-              <CVSidebarEntry title={'address'} content={personalEntry['address']} />
+              <CVSidebarEntry title={'address'} content={address} />
               <CVSidebarEntry title={'email'} content={personalEntry['email']} />
               <CVSidebarEntry title={'phone number'} content={personalEntry['phone number']} />
             </CVSection>
