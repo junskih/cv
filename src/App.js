@@ -97,7 +97,7 @@ class App extends React.Component {
     entry.fields = {};
 
     formSection.fields.forEach(field => {
-      entry.fields[field] = field;
+      entry.fields[field] = '';
     });
     
     // Add section to state along with array including single empty entry
