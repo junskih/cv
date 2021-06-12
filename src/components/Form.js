@@ -37,6 +37,7 @@ class Form extends React.Component {
           name='delete'
           color='danger'
           onClick={handleDelete.bind(this, 'education', entry.id)}
+          disabled={education.length === 1}
         />
       </FormEntry>
     );
@@ -53,6 +54,7 @@ class Form extends React.Component {
           name='delete'
           color='danger'
           onClick={handleDelete.bind(this, 'experience', entry.id)}
+          disabled={experience.length === 1}
         />
       </FormEntry>
     );
