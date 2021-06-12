@@ -1,81 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FormField from './FormField';
 import Button from './Button';
 
-class FormEntry extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isEditing: true,
-      editFields: {...this.props.data}
-    }
-    this.handleEdit = this.handleEdit.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+const FormEntry = (props) => {
+  const {
+    id,
+    sectionTitle,
+    data,
+    handleSave
+  } = props;
+
+  const [isEditing, setIsEditing] = useState(true);
+  const [editFields, setEditFields] = useState(data);
+
+  useEffect(() => {
+    handleSave(sectionTitle, id, editFields);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditing]);
+
+  function handleEdit() {
+    setIsEditing(true);
   }
 
-  handleEdit() {
-    this.setState({isEditing: true});
+  function handleFieldsSave() {
+    setIsEditing(false);
   }
 
-  handleSave() {
-    this.setState({isEditing: false});
-
-    this.props.handleSave(
-      this.props.sectionTitle,
-      this.props.id,
-      this.state.editFields
-    );
-  }
-
-  handleChange(field, value) {
-    this.setState((state) => {
+  function handleChange(field, value) {
+    setEditFields((prevEditFields) => {
       return {
-        editFields: {
-          ...state.editFields,
-          [field]: value
-        }
+        ...prevEditFields,
+        [field]: value
       }
     });
   }
 
-  render() {
-    const {
-      data
-    } = this.props;
-
-    const {
-      isEditing
-    } = this.state;
-
-    let entryFields = [];
-    for (const field in data) {
-      entryFields.push(
-        <FormField
-          key={field}
-          isEditing={isEditing}
-          placeholder={field}
-          value={data[field]}
-          handleChange={this.handleChange}
-        />
-      );
-    }
-
-    let buttonName = isEditing ? 'save' : 'edit';
-    let buttonHandler = isEditing ? this.handleSave : this.handleEdit;
-
-    return (
-      <div className='form-entry'>
-        {entryFields}
-        <Button
-          name={buttonName}
-          color='neutral'
-          onClick={buttonHandler}
-        />
-        {this.props.children}
-      </div>
+  let entryFields = [];
+  for (const field in data) {
+    entryFields.push(
+      <FormField
+        key={field}
+        isEditing={isEditing}
+        placeholder={field}
+        value={data[field]}
+        handleChange={handleChange}
+      />
     );
   }
-}
+
+  let buttonName = isEditing ? 'save' : 'edit';
+  let buttonHandler = isEditing ? handleFieldsSave : handleEdit;
+
+  return (
+    <div className='form-entry'>
+      {entryFields}
+      <Button
+        name={buttonName}
+        color='neutral'
+        onClick={buttonHandler}
+      />
+      {props.children}
+    </div>
+  );
+};
 
 export default FormEntry;
