@@ -1,169 +1,128 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Form from './components/Form';
 import CV from './components/CV';
 import uniqid from 'uniqid';
 import './App.css';
-const clone = require('rfdc')();
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleAdd = this.handleAdd.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-
-    this.formSections = [
-      {
-        id: uniqid(),
-        title: 'personal',
-        fields: [
-          'first name',
-          'last name',
-          'title',
-          'city',
-          'zipcode',
-          'address',
-          'phone number',
-          'email',
-          'description'
-        ],
-        deletable: false
-      },
-      
-      {
-        id: uniqid(),
-        title: 'education',
-        fields: [
-          'degree',
-          'institution',
-          'from',
-          'to'
-        ],
-        deletable: true
-      },
-
-      {
-        id: uniqid(),
-        title: 'experience',
-        fields: [
-          'title',
-          'employer',
-          'from',
-          'to'
-        ],
-        deletable: true
+const App = () => {
+  const [personal, setPersonal] = useState([
+    {
+      id: uniqid(),
+      fields: {
+        'first name': '',
+        'last name': '',
+        'title': '',
+        'city': '',
+        'zipcode': '',
+        'address': '',
+        'phone number': '',
+        'email': '',
+        'description': ''
       }
-    ];
-
-    // Initialize state based on form section definitions
-    let info = {};
-    this.formSections.forEach(formSection => {
-      let entry = this.handleAdd(formSection.title);
-      info[formSection.title] = [entry];
-    });
-    this.state = {...info};
-    
-    // This is what state will/should look like:
-    /*
-    this.state = {
-      'personal information': [
-        {
-          id: uniqid(),
-          fields: {
-            'first name': '',
-            ...
-          }
-        }
-      ],
-      'education': [
-        {
-          id: uniqid(),
-          fields: {
-            'degree': '',
-            ...
-          }
-        }
-      ],
-      ...
     }
-    */
+  ]);
+  const [education, setEducation] = useState([
+    {
+      id: uniqid(),
+      fields: {
+        'degree': '',
+        'institution': '',
+        'from': '',
+        'to': ''
+      }
+    }
+  ]);
+  const [experience, setExperience] = useState([
+    {
+      id: uniqid(),
+      fields: {
+        'title': '',
+        'company': '',
+        'from': '',
+        'to': ''
+      }
+    }
+  ]);
+
+  function getSetter(sectionTitle) {
+    switch (sectionTitle) {
+      case 'personal':
+        return setPersonal;
+
+      case 'education':
+        return setEducation;
+
+      case 'experience':
+        return setExperience;
+
+      default:
+        return null;
+    }
   }
 
-  handleAdd(sectionTitle) {
-    const formSection = this.formSections.find(section => section.title === sectionTitle);
+  function handleAdd(sectionTitle) {
+    let setState = getSetter(sectionTitle);
+    setState(prevState => {
+      let firstEntry = prevState[0];
+      let fields = {...firstEntry.fields};
 
-    let entry = {};
-    entry.id = uniqid();
-    entry.fields = {};
+      for (const prop in fields) {
+        fields[prop] = '';
+      }
 
-    formSection.fields.forEach(field => {
-      entry.fields[field] = '';
-    });
-    
-    // Add section to state along with array including single empty entry
-    this.setState(state => {
-      return {
-        [sectionTitle]: [...state[sectionTitle], entry]
-      };
-    });
-
-    return entry;
-  }
-
-  handleSave(sectionTitle, id, fields) {
-    this.setState((state) => {
-      // Deep copy array of entries
-      let newFormSection = clone(state[sectionTitle]);
-      let entry = newFormSection.find(entry => entry.id === id);
+      let entry = {};
+      entry.id = uniqid();
       entry.fields = fields;
 
-      return {
-        [sectionTitle]: newFormSection
-      }
+      return [...prevState, entry];
     });
   }
 
-  handleDelete(sectionTitle, id) {
-    this.setState((state) => {
-      let newFormSection = clone(state[sectionTitle])
-        .filter(entry => entry.id !== id);
+  function handleSave(sectionTitle, id, fields) {
+    let setState = getSetter(sectionTitle);
 
-      return {
-        [sectionTitle]: newFormSection
-      }
+    setState(prevState => {
+      let newState = [...prevState];
+      let entry = newState.find(entry => entry.id === id);
+      entry.fields = fields;
+      return newState;
     });
   }
-  
-  render() {
-    const {
-      personal,
-      education,
-      experience
-    } = this.state;
 
-    return (
-      <div>
-        <header>
-          <h1 className='header-title'>CV</h1>
-        </header>
-        <main>
-          <Form
-            personal={personal}
-            education={education}
-            experience={experience}
-            handleAdd={this.handleAdd}
-            handleSave={this.handleSave}
-            handleDelete={this.handleDelete}
-          />
-          <CV
-            personal={personal}
-            education={education}
-            experience={experience}
-          />
-        </main>
-      </div>
-    );
+  function handleDelete(sectionTitle, id) {
+    let setState = getSetter(sectionTitle);
+
+    setState(prevState => {
+      // Prevent deleting all entries
+      if (prevState.length === 1) return prevState;
+      let newState = [...prevState].filter(entry => entry.id !== id);
+      return newState;
+    });
   }
-}
+
+  // Render
+  return (
+    <div>
+      <header>
+        <h1 className='header-title'>CV</h1>
+      </header>
+      <main>
+        <Form
+          personal={personal}
+          education={education}
+          experience={experience}
+          handleAdd={handleAdd}
+          handleSave={handleSave}
+          handleDelete={handleDelete}
+        />
+        <CV
+          personal={personal}
+          education={education}
+          experience={experience}
+        />
+      </main>
+    </div>
+  );
+};
 
 export default App;
